@@ -1,0 +1,69 @@
+<header class="container" th:fragment="header" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <nav class="navbar navbar-expand-lg rounded mt-2 bg-body-tertiary shadow">
+        <div class="container-fluid">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+                    <li class="nav-item" sec:authorize="hasAnyRole('ROLE_ADMIN')">
+                        <a class="nav-link" th:href="@{/departamento/list}">Departamentos</a>
+                    </li>
+
+                    <li class="nav-item" sec:authorize="hasAnyRole('ROLE_USER')">
+                        <a class="nav-link" th:href="@{/produto/catalogo}">Loja</a>
+                    </li>
+
+                    <li class="nav-item" sec:authorize="hasAnyRole('ROLE_ADMIN')">
+                        <a class="nav-link" th:href="|/produto/list|">Produtos</a>
+                    </li>
+
+                    <li class="nav-item" sec:authorize="hasAnyRole('ROLE_ADMIN')">
+                        <a class="nav-link" th:href="@{/pessoa/list}">Cliente</a>
+                    </li>
+
+                    <li class="nav-item" sec:authorize="hasAnyRole('ROLE_ADMIN')">
+                        <a class="nav-link" th:href="@{/venda/list}">Vendas</a>
+                    </li>
+                </ul>
+
+                <ul class="navbar-nav ms-3 me-1">
+
+                    <li class="nav-item d-flex align-items-center" sec:authorize="isAuthenticated()">
+                        <span class="me-3 text-secondary" th:text="|Olá ${#authentication.name}|"></span>
+                    </li>
+
+
+                    <li class="nav-item d-flex align-items-center me-3" sec:authorize="isAuthenticated()">
+                        <a class="dropdown-item" th:href="@{/venda/minhas-vendas}">
+                            Meus Pedidos
+                        </a>
+                    </li>
+
+                    <li class="nav-item d-flex align-items-center me-3" sec:authorize="!isAuthenticated()">
+                        <a class="nav-link d-flex align-items-center" th:href="@{/login}" data-bs-toggle="modal" data-bs-target="#modalLogin">
+                            <i class="bi bi-box-arrow-in-left me-1" style="font-size: 1.2rem;"></i>
+                            <span class="fw-bold text-dark">Entre | Cadastre-se</span>
+                        </a>
+                    </li>
+                    <li class="nav-item d-flex align-items-center me-3" sec:authorize="isAuthenticated()">
+                        <form th:action="@{/logout}" method="post">
+                            <input type="hidden" name="_csrf" th:value="${_csrf.token}" />
+                            <button type="submit" class="dropdown-item">
+                                <i class="bi bi-box-arrow-right"></i> Logout
+                            </button>
+                        </form>
+                    </li>
+
+                    <li class="nav-item position-relative">
+                        <a class="nav-link" th:href="@{/venda/carrinho}">
+                            <i class="bi bi-cart-check" style="font-size: 1.3rem;"></i>
+                            <span class="badge bg-danger position-absolute top-0 start-100 translate-middle"
+                                  th:if="${session.venda?.itensVenda != null}"
+                                  th:text="${session.venda?.itensVenda.size()}"></span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div th:replace="~{fragments/modal-login :: modalLogin}"></div>
+</header>

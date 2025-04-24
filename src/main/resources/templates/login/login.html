@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html th:replace="~{fragments/layout :: layout(~{::head},~{::main})}">
+
+<head th:replace="~{fragments/head :: head('Login',~{})}"></head>
+
+<body>
+    <main>
+
+        <div th:replace="~{fragments/modal-login :: modalLogin}"></div>
+
+    </main>
+
+</body>
+</html>

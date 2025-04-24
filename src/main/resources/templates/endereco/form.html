@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html th:replace="~{fragments/layout :: layout(~{::head},~{::main})}">
+
+<head th:replace="~{fragments/head :: head('Endereço',~{})}"></head>
+
+<body>
+<main>
+
+    <div th:replace="~{fragments/enderecoModal :: modalEndereco}"></div>
+
+</main>
+
+</body>
+</html>

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html th:replace="~{fragments/layout :: layout(~{::head},~{::main})}">
+
+<head th:replace="~{fragments/head :: head('Finalizar a Compra',~{})}">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <title>Finalizar a Compra</title>
+</head>
+
+<body>
+<main>
+  <div class="container py-5">
+    <form th:action="@{/venda/finalizar}" th:object="${enderecoEntrega}" method="post">
+      <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+
+      <div class="row">
+        <!-- Endereço de Entrega -->
+        <div class="col-md-8">
+          <div class="card mb-4">
+            <div class="card-header py-3">
+              <h5 class="mb-0">Endereço de Entrega</h5>
+            </div>
+            <div class="card-body">
+              <div th:if="${#lists.isEmpty(enderecos)}">
+                <p class="text-danger">Informe o CEP para buscar o endereço:</p>
+                <div class="row mb-3">
+                  <div class="col-md-4">
+                    <label for="cep" class="form-label">CEP:</label>
+                    <input class="form-control" type="text" id="cep" th:field="*{cep}" th:errorclass="is-invalid" required>
+                    <div class="invalid-feedback" th:if="${#fields.hasErrors('cep')}" th:errors="*{cep}"></div>
+                  </div>
+                  <div class="col-md-8">
+                    <label for="logradouro" class="form-label">Logradouro:</label>
+                    <input class="form-control" type="text" id="logradouro" th:field="*{logradouro}" th:errorclass="is-invalid" readonly required>
+                    <div class="invalid-feedback" th:if="${#fields.hasErrors('logradouro')}" th:errors="*{logradouro}"></div>
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <div class="col-md-2">
+                    <label for="numero" class="form-label">Número:</label>
+                    <input class="form-control" type="text" id="numero" th:field="*{numero}" th:errorclass="is-invalid" required>
+                    <div class="invalid-feedback" th:if="${#fields.hasErrors('numero')}" th:errors="*{numero}"></div>
+                  </div>
+                  <div class="col-md-4">
+                    <label for="bairro" class="form-label">Bairro:</label>
+                    <input class="form-control" type="text" id="bairro" th:field="*{bairro}" th:errorclass="is-invalid" readonly required>
+                    <div class="invalid-feedback" th:if="${#fields.hasErrors('bairro')}" th:errors="*{bairro}"></div>
+                  </div>
+                  <div class="col-md-4">
+                    <label for="cidade" class="form-label">Cidade:</label>
+                    <input class="form-control" type="text" id="cidade" th:field="*{cidade}" th:errorclass="is-invalid" readonly required>
+                    <div class="invalid-feedback" th:if="${#fields.hasErrors('cidade')}" th:errors="*{cidade}"></div>
+                  </div>
+                  <div class="col-md-2">
+                    <label for="estado" class="form-label">Estado:</label>
+                    <input class="form-control" type="text" id="estado" th:field="*{estado}"
+                           th:errorclass="is-invalid" readonly required>
+                    <div class="invalid-feedback" th:if="${#fields.hasErrors('estado')}" th:errors="*{estado}"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Forma de Pagamento -->
+          <div class="card mb-4">
+            <div class="card-header py-3">
+              <h5 class="mb-0">Forma de Pagamento</h5>
+            </div>
+            <div class="card-body">
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="pagamento" id="cartao" value="cartao" checked required>
+                <label class="form-check-label" for="cartao">
+                  Cartão de Crédito
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="pagamento" id="boleto" value="boleto" required>
+                <label class="form-check-label" for="boleto">
+                  Boleto Bancário
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Resumo da Compra -->
+        <div class="col-md-4">
+          <div class="card mb-4">
+            <div class="card-header py-3">
+              <h5 class="mb-0">Resumo da Compra</h5>
+            </div>
+            <div class="card-body">
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  Produtos
+                  <span th:text="${#numbers.formatCurrency(session.venda?.totalVenda())}"></span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  Frete
+                  <span>Gratis</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  <strong>Total</strong>
+                  <span><strong th:text="${#numbers.formatCurrency(session.venda?.totalVenda())}"></strong></span>
+                </li>
+              </ul>
+
+              <button type="submit" class="btn btn-danger w-100 mt-3">Finalizar Compra</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div th:replace="~{fragments/modal-login :: modalLogin}"></div>
+
+  <script>
+    document.getElementById('cep').addEventListener('blur', function() {
+      var cep = this.value.replace(/\D/g, '');
+      if (cep !== "") {
+        var validacep = /^[0-9]{8}$/;
+        if (validacep.test(cep)) {
+          // Bloqueando os campos enquanto busca o CEP
+          document.getElementById('logradouro').disabled = true;
+          document.getElementById('bairro').disabled = true;
+          document.getElementById('cidade').disabled = true;
+          document.getElementById('estado').disabled = true;
+
+          document.getElementById('logradouro').value = "Buscando...";
+          document.getElementById('bairro').value = "Buscando...";
+          document.getElementById('cidade').value = "Buscando...";
+          document.getElementById('estado').value = "Buscando...";
+
+          fetch(`https://viacep.com.br/ws/${cep}/json/`)
+                  .then(response => response.json())
+                  .then(data => {
+                    if (!("erro" in data)) {
+                      document.getElementById('logradouro').value = data.logradouro;
+                      document.getElementById('bairro').value = data.bairro;
+                      document.getElementById('cidade').value = data.localidade;
+                      document.getElementById('estado').value = data.uf;
+
+                      // Habilitando os campos para permitir a validação
+                      document.getElementById('logradouro').disabled = false;
+                      document.getElementById('bairro').disabled = false;
+                      document.getElementById('cidade').disabled = false;
+                      document.getElementById('estado').disabled = false;
+                    } else {
+                      alert("CEP não encontrado.");
+                      document.getElementById('cep').value = "";
+                    }
+                  })
+                  .catch(error => {
+                    alert("Erro ao buscar o CEP. Tente novamente.");
+                    console.error('Erro na requisição:', error);
+                  });
+        } else {
+          alert("Formato de CEP inválido.");
+          document.getElementById('cep').value = "";
+        }
+      }
+    });
+  </script>
+</main>
+</body>
+</html>
