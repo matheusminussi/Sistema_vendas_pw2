@@ -94,12 +94,14 @@ pw2_final-main/
 - **Banco utilizado**: H2 (memória)
 - **Configuração em `application.properties`:**
 
+```
 spring.datasource.url=jdbc:h2:mem:testdb
 spring.datasource.driverClassName=org.h2.Driver
 spring.datasource.username=sa
 spring.datasource.password=
 spring.jpa.database-platform=org.hibernate.dialect.H2Dialect
 spring.h2.console.enabled=true
+```
 
 - Acesse o console do H2 via: `http://localhost:8080/h2-console`
 
