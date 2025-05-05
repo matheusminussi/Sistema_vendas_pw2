@@ -58,7 +58,7 @@ Localizado em: `src/main/java/`
     - JSF (Jakarta Faces)
 
 ## Estrutura do Projeto
-
+```
 pw2_final-main/
 ├── src/
 │   ├── main/
@@ -73,7 +73,8 @@ pw2_final-main/
 │   │       └── pages/
 │   │           └── index.xhtml
 ├── pom.xml
-└── [README.md](http://readme.md/)
+└── README.md
+```
 
 **Observações:**
 
