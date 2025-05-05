@@ -16,7 +16,7 @@ A aplicação também tem como metas:
 
 ### **Itens de Configuração**
 
-A baseline do projeto inclui todos os artefatos necessários para compilar, executar e manter a aplicação de forma consistente. Abaixo estão os principais itens de configuração identificados:
+Abaixo estão os principais itens de configuração identificados, todos os artefatos necessários para compilar, executar e manter a aplicação de forma consistente.:
 
 ### **Código-fonte**
 
