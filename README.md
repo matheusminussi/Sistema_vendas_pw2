@@ -4,7 +4,7 @@ Este documento tem como objetivo estabelecer uma baseline para essa aplicação 
 
 O projeto utiliza o banco de dados **H2 em memória**, com persistência via **Spring Data JPA**, interface construída com **PrimeFaces**, e organização em camadas (`model`, `repository`, `controller`) e o  build é feito com **Maven.**
 
-### **Objetivos do Projeto**
+# **Objetivos do Projeto**
 
 O objetivo deste projeto é desenvolver uma **aplicação web para uma loja online**, permitindo o gerenciamento de produtos, incluindo funcionalidades de **cadastro, listagem, atualização e remoção de produtos**.
 
@@ -14,11 +14,11 @@ A aplicação também tem como metas:
 - Utilizar **JSF com PrimeFaces** para criar uma interface web interativa.
 - Estabelecer uma base estável e bem estruturada para futuras melhorias ou ampliações do sistema.
 
-### **Itens de Configuração**
+# **Itens de Configuração**
 
-Abaixo estão os principais itens de configuração identificados, todos os artefatos necessários para compilar, executar e manter a aplicação de forma consistente.:
+Abaixo estão os principais itens de configuração identificados, todos os artefatos necessários para compilar, executar e manter a aplicação de forma consistente:
 
-### **Código-fonte**
+## **Código-fonte**
 
 Localizado em: `src/main/java/`
 
@@ -26,7 +26,7 @@ Localizado em: `src/main/java/`
 - **Pacote `repository`**: Contém as interfaces que estendem `JpaRepository`, responsáveis pelas operações com o banco de dados.
 - **Pacote `controller`**: Contém os beans JSF responsáveis por intermediar a interação entre a interface e a lógica da aplicação.
 
-### **Arquivos de Configuração**
+## **Arquivos de Configuração**
 
 - **`application.properties`** (`src/main/resources/`):
     
@@ -41,14 +41,14 @@ Localizado em: `src/main/java/`
     Arquivo de configuração do JSF. Pode ser usado para definir beans gerenciados, navegadores de páginas e componentes personalizados. Atualmente pode estar vazio, pois desde JSF 2.0 muitas configurações são feitas via anotações.
     
 
-### **Interface do Usuário**
+## **Interface do Usuário**
 
 - **Arquivos `.xhtml`** (`src/main/webapp/pages/`):
     
     Páginas web da aplicação, construídas com JSF + PrimeFaces. Exemplo: `index.xhtml` ou `produtos.xhtml` para exibir a lista de produtos e permitir ações.
     
 
-### **Dependências**
+# **Dependências**
 
 - Gerenciadas no arquivo `pom.xml`, incluindo:
     - Spring Boot
@@ -57,7 +57,7 @@ Localizado em: `src/main/java/`
     - H2 Database
     - JSF (Jakarta Faces)
 
-## Estrutura do Projeto
+# Estrutura do Projeto
 ```
 pw2_final-main/
 ├── src/
@@ -82,14 +82,14 @@ pw2_final-main/
 - As páginas JSF estão localizadas em `/webapp/pages`.
 - O arquivo `pom.xml` gerencia as dependências do projeto.
 
-### **Controle de Versão**
+# **Controle de Versão**
 
 - Repositório no GitHub.
 - Estrutura de branches:
     - `main`: versão estável do projeto
     - `dev` : para desenvolvimento de novas features
 
-### **Configuração do Banco de Dados**
+# **Configuração do Banco de Dados**
 
 - **Banco utilizado**: H2 (memória)
 - **Configuração em `application.properties`:**
@@ -105,7 +105,7 @@ spring.h2.console.enabled=true
 
 - Acesse o console do H2 via: `http://localhost:8080/h2-console`
 
-## Dependências Essenciais (`pom.xml`)
+# Dependências Essenciais (`pom.xml`)
 
 ```
 
