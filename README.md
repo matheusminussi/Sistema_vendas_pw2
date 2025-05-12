@@ -1,4 +1,4 @@
-### **Introdução**
+# **Introdução**
 
 Este documento tem como objetivo estabelecer uma baseline para essa aplicação Java que foi desenvolvida com **Spring Boot** no backend e **JSF (PrimeFaces)** no frontend. A aplicação implementa um **CRUD de um sistema de vendas** como prova de conceito.
 
